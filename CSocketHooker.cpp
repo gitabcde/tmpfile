@@ -794,14 +794,14 @@ BOOL CSocketHooker::DoWSAGetOverlappedResult(
 	LockSockHooker();
 	BOOL bRet = WSAGetOverlappedResultTrampoline(s, lpOverlapped, lpcbTransfer, fWait, lpdwFlags);	
 	if (bRet) {
-		enter_critical();
+	  //		enter_critical();
 		overlapped_buffers_map::iterator it = m_Overlappeds.find(lpOverlapped);
 		if (it != m_Overlappeds.end()) {
 			OverlappedBuffers& bufs = (*it).second;
 			CallOnWSARecv(s, bufs.lpBuffers, bufs.dwBufferCount, *lpcbTransfer, *lpdwFlags);
 			m_Overlappeds.erase(it);
 		}
-		leave_critical();
+		//		leave_critical();
 	} 
 
 	UnLockSockHooker();

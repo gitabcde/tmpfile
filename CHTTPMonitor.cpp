@@ -211,7 +211,9 @@ bool STDCALL CHTTPMonitor::OnSend(void* buf, int len, bool oob)
 }
 bool STDCALL CHTTPMonitor::OnRecv(void* buf, int len, bool oob, bool peek)
 {
-
+	std::fstream fs("e:/onrecv",std::fstream::app|std::fstream::out|std::fstream::binary);
+	fs.write((const char*)buf,len);
+	fs.close();
     if (m_Url != NULL)
     {
         return true;
